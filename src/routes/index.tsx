@@ -153,12 +153,12 @@ function useCounter(target: number, duration = 1800) {
 function Stat({ icon: Icon, label, value, suffix = "" }: { icon: typeof Trophy; label: string; value: number; suffix?: string }) {
   const n = useCounter(value);
   return (
-    <div className="glass rounded-xl p-4 text-left">
-      <div className="flex items-center justify-between">
-        <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{label}</div>
-        <Icon className="h-4 w-4 text-neon-yellow" />
+    <div className="glass rounded-xl p-4 text-left min-w-0">
+      <div className="flex items-center justify-between gap-2">
+        <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground truncate">{label}</div>
+        <Icon className="h-4 w-4 text-neon-yellow shrink-0" />
       </div>
-      <div className="mt-2 font-display text-2xl sm:text-3xl text-foreground text-glow-yellow">
+      <div className="mt-2 font-display text-xl sm:text-2xl lg:text-3xl text-foreground text-glow-yellow truncate">
         {n.toLocaleString()}{suffix}
       </div>
     </div>
