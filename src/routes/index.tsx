@@ -4,6 +4,7 @@ import {
   Wallet, Swords, Coins, Trophy, Zap, Users, Sparkles, ShieldCheck,
   Twitter, Send, MessageCircle, Copy, ChevronRight, Volume2, VolumeX,
   CircleDot, Flame, Crown, Star, Gamepad2, Store, ArrowUpRight, Check,
+  X, AlertTriangle, Info, LogOut, Network,
 } from "lucide-react";
 import {
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
@@ -11,6 +12,7 @@ import {
 import { Logo } from "@/components/site/Logo";
 import { Stadium } from "@/components/site/Stadium";
 import { PlayerCard, type PlayerCardData } from "@/components/site/PlayerCard";
+import { useMetaMask, onToast, pushToast, type Toast } from "@/hooks/useMetaMask";
 import card1 from "@/assets/card-1.jpg";
 import card2 from "@/assets/card-2.jpg";
 import card3 from "@/assets/card-3.jpg";
@@ -21,8 +23,8 @@ import trophyImg from "@/assets/trophy.png";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Who Winner World Cup? — Football NFT Battles on Solana" },
-      { name: "description", content: "Collect legendary football NFTs, battle players, win $CUP. A Web3 football card battle game on Solana." },
+      { title: "Who Winner World Cup? — Football NFT Battles on BSC" },
+      { name: "description", content: "Collect legendary football NFTs, battle players, win $CUP. A Web3 football card battle game on Binance Smart Chain." },
     ],
   }),
   component: Index,
@@ -171,7 +173,7 @@ function Hero() {
         <div className="animate-fade-up">
           <div className="inline-flex items-center gap-2 glass rounded-full px-3 py-1.5 text-xs text-neon-green">
             <CircleDot className="h-3 w-3 animate-pulse" />
-            LIVE ON SOLANA · SEASON 01
+            LIVE ON BNB SMART CHAIN · SEASON 01
           </div>
           <h1 className="mt-5 font-display font-black text-5xl sm:text-7xl lg:text-[5.5rem] leading-[0.95] tracking-tight">
             <span className="block text-foreground">WHO WINNER</span>
@@ -179,7 +181,7 @@ function Hero() {
           </h1>
           <p className="mt-6 max-w-xl text-base sm:text-lg text-muted-foreground">
             Collect <span className="text-neon-yellow">legendary football NFTs</span>, battle other players in PvP arenas,
-            and win <span className="text-neon-green">$CUP</span>. The first AAA Web3 football card battler on Solana.
+            and win <span className="text-neon-green">$CUP</span>. The first AAA Web3 football card battler on Binance Smart Chain.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#gameplay" className="group inline-flex items-center gap-2 rounded-xl bg-neon-yellow text-emerald-darker px-5 py-3 font-display tracking-wide glow-yellow hover:brightness-110 transition">
