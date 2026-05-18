@@ -308,7 +308,10 @@ function CardShowcase() {
         title={<>OWN THE <span className="text-gradient-cup">GREATEST</span> CARDS</>}
         sub="Each NFT holds Attack, Defense, Speed, Skill, Rarity & Power Score — minted on BNB Smart Chain, tradable forever."
       />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 mt-10">
+        <WalletStatusBanner mintPriceBNB={0.05} />
+      </div>
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
         {players.map(p => (
           <div key={p.name} className="group/card flex flex-col gap-3">
             <PlayerCard data={p} />
