@@ -45,7 +45,7 @@ export function useMint() {
       pushToast({ kind: "info", title: "Confirm in MetaMask", desc: `Minting ${opts.playerName}…` });
 
       // Encode a tiny payload so the tx carries mint intent on-chain.
-      const payload = `0x${Buffer.from(`MINT:${opts.playerName}`).toString("hex")}`;
+      const payload = "0x" + Array.from(`MINT:${opts.playerName}`).map(c => c.charCodeAt(0).toString(16).padStart(2, "0")).join("");
       const valueHex = "0x" + Math.floor(parseFloat(opts.priceBNB ?? "0") * 1e18).toString(16);
 
       const txHash = await window.ethereum.request({
