@@ -6,7 +6,7 @@ export function Logo() {
       <img
         src={logoUrl}
         alt="Who Winner World Cup logo"
-        className="h-10 w-10 object-contain transition-transform group-hover:scale-105 drop-shadow-[0_0_12px_rgba(163,230,53,0.45)]"
+        className="h-10 w-10 object-contain transition-transform group-hover:scale-105 drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]"
       />
       <div className="leading-tight">
         <div className="font-display text-sm tracking-[0.2em] text-foreground">WHO WINNER</div>
