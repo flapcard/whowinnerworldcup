@@ -12,6 +12,7 @@ import {
 import { Logo } from "@/components/site/Logo";
 import { Stadium } from "@/components/site/Stadium";
 import { PlayerCard, type PlayerCardData } from "@/components/site/PlayerCard";
+import { MintModalRoot } from "@/components/site/MintModal";
 import { useMetaMask, onToast, pushToast, type Toast } from "@/hooks/useMetaMask";
 import card1 from "@/assets/card-1.jpg";
 import card2 from "@/assets/card-2.jpg";
@@ -56,6 +57,7 @@ function Index() {
       <CTA />
       <Footer />
       <WalletModalRoot />
+      <MintModalRoot />
       <ToastStack />
       <BSCNetworkBanner />
     </div>
@@ -308,7 +310,15 @@ function CardShowcase() {
       />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
         {players.map(p => (
-          <PlayerCard key={p.name} data={p} />
+          <div key={p.name} className="group/card flex flex-col gap-3">
+            <PlayerCard data={p} />
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent("open-mint", { detail: { player: p, priceBNB: "0.05" } }))}
+              className="w-full inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-[11px] font-display tracking-[0.2em] bg-gradient-to-r from-neon-yellow to-neon-green text-emerald-darker opacity-90 hover:opacity-100 transition shadow-[0_0_25px_-10px_oklch(0.92_0.21_110/0.7)]"
+            >
+              <Sparkles className="h-3 w-3" /> MINT · 0.05 BNB
+            </button>
+          </div>
         ))}
       </div>
     </section>
