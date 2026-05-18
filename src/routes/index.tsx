@@ -56,6 +56,8 @@ function Index() {
       <CTA />
       <Footer />
       <WalletModalRoot />
+      <ToastStack />
+      <BSCNetworkBanner />
     </div>
   );
 }
