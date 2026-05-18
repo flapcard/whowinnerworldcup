@@ -62,13 +62,14 @@ export function useMint() {
       pushToast({ kind: "info", title: "Transaction submitted", desc: `${txHash.slice(0, 10)}…` });
 
       // Poll for receipt
-      let receipt: { status?: string; blockNumber?: string } | null = null;
+      type Receipt = { status?: string; blockNumber?: string };
+      let receipt: Receipt | null = null;
       for (let i = 0; i < 40; i++) {
         await new Promise(r => setTimeout(r, 1500));
-        receipt = await window.ethereum.request({
+        receipt = (await window.ethereum.request({
           method: "eth_getTransactionReceipt",
           params: [txHash],
-        }) as typeof receipt;
+        })) as Receipt | null;
         if (receipt) break;
       }
 
