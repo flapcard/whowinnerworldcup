@@ -198,7 +198,7 @@ function Hero() {
               <Wallet className="h-5 w-5" /> CONNECT METAMASK
             </button>
           </div>
-          <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
             <Stat icon={Swords} label="Total Battles"     value={284913} />
             <Stat icon={Users}  label="Active Players"    value={48207} />
             <Stat icon={Coins}  label="Prize Pool ($CUP)" value={12500000} />
