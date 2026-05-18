@@ -87,12 +87,7 @@ function Header() {
           </nav>
           <div className="flex items-center gap-2">
             <SoundToggle />
-            <button
-              onClick={() => window.dispatchEvent(new CustomEvent("open-wallet"))}
-              className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-neon-yellow text-emerald-darker px-4 py-2 text-sm font-display tracking-wide glow-yellow hover:brightness-110 transition"
-            >
-              <Wallet className="h-4 w-4" /> CONNECT
-            </button>
+            <div className="hidden sm:block"><WalletButton /></div>
             <button onClick={() => setOpen(o => !o)} className="md:hidden text-foreground p-2" aria-label="menu">
               <div className="space-y-1.5">
                 <div className="h-0.5 w-5 bg-foreground" />
