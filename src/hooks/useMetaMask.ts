@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 
 // Binance Smart Chain Mainnet
 export const BSC_CHAIN_ID = "0x38"; // 56
