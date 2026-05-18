@@ -771,41 +771,129 @@ function Footer() {
   );
 }
 
-/* --------------------------- WALLET MODAL -------------------------- */
+/* ------------------------ METAMASK + BSC LAYER ---------------------- */
+
+function shortAddr(a: string) { return `${a.slice(0, 6)}...${a.slice(-4)}`; }
+
+function WalletButton() {
+  const { address, balance, isBSC, connect, disconnect, ensureBSC, connecting } = useMetaMask();
+  const [openMenu, setOpenMenu] = useState(false);
+
+  if (!address) {
+    return (
+      <button
+        onClick={() => window.dispatchEvent(new CustomEvent("open-wallet"))}
+        disabled={connecting}
+        className="inline-flex items-center gap-2 rounded-xl bg-neon-yellow text-emerald-darker px-4 py-2 text-sm font-display tracking-wide glow-yellow hover:brightness-110 transition disabled:opacity-60"
+      >
+        <Wallet className="h-4 w-4" /> {connecting ? "CONNECTING..." : "CONNECT METAMASK"}
+      </button>
+    );
+  }
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpenMenu(o => !o)}
+        className="inline-flex items-center gap-2 rounded-xl glass border border-neon-yellow/40 px-3 py-2 text-sm font-display tracking-wide text-foreground hover:border-neon-yellow transition"
+      >
+        <span className={`h-2 w-2 rounded-full ${isBSC ? "bg-neon-green" : "bg-amber-400 animate-pulse"}`} />
+        <span className="tabular-nums">{balance} BNB</span>
+        <span className="text-neon-yellow">{shortAddr(address)}</span>
+      </button>
+      {openMenu && (
+        <div className="absolute right-0 mt-2 w-72 glass-strong rounded-2xl p-4 z-50 animate-fade-up" onMouseLeave={() => setOpenMenu(false)}>
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] tracking-[0.25em] text-muted-foreground uppercase">Wallet</span>
+            <span className={`text-[10px] font-display ${isBSC ? "text-neon-green" : "text-amber-400"}`}>
+              {isBSC ? "● BNB SMART CHAIN" : "● WRONG NETWORK"}
+            </span>
+          </div>
+          <div className="mt-2 font-display text-sm text-foreground break-all">{address}</div>
+          <div className="mt-4 grid grid-cols-2 gap-2 text-center">
+            <div className="rounded-lg bg-emerald-darker/60 p-3 border border-neon-green/15">
+              <div className="text-[9px] tracking-[0.25em] text-muted-foreground uppercase">Balance</div>
+              <div className="font-display text-neon-yellow">{balance} BNB</div>
+            </div>
+            <div className="rounded-lg bg-emerald-darker/60 p-3 border border-neon-green/15">
+              <div className="text-[9px] tracking-[0.25em] text-muted-foreground uppercase">NFTs</div>
+              <div className="font-display text-neon-green">0 cards</div>
+            </div>
+          </div>
+          {!isBSC && (
+            <button onClick={ensureBSC} className="mt-3 w-full rounded-lg bg-neon-yellow text-emerald-darker px-3 py-2 text-xs font-display tracking-wide">
+              SWITCH TO BSC
+            </button>
+          )}
+          <button onClick={disconnect} className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-xs text-muted-foreground hover:text-foreground">
+            <LogOut className="h-3 w-3" /> Disconnect
+          </button>
+          <div className="mt-3 text-[10px] text-muted-foreground text-center">
+            <a href={`https://bscscan.com/address/${address}`} target="_blank" rel="noreferrer" className="hover:text-neon-yellow">View on BscScan ↗</a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function WalletModalRoot() {
   const [open, setOpen] = useState(false);
+  const { connect, connecting, isInstalled, address } = useMetaMask();
+
   useEffect(() => {
     const h = () => setOpen(true);
     window.addEventListener("open-wallet", h as EventListener);
     return () => window.removeEventListener("open-wallet", h as EventListener);
   }, []);
+  useEffect(() => { if (address) setOpen(false); }, [address]);
+
   if (!open) return null;
-  const wallets = [
-    { name: "Phantom",  color: "from-fuchsia-500/30 to-fuchsia-300/10" },
-    { name: "Solflare", color: "from-orange-500/30 to-yellow-300/10" },
-    { name: "Backpack", color: "from-red-500/30 to-rose-300/10" },
-    { name: "WalletConnect", color: "from-sky-500/30 to-sky-300/10" },
-  ];
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center p-4 bg-emerald-darker/80 backdrop-blur-md animate-fade-up" onClick={() => setOpen(false)}>
-      <div className="w-full max-w-md glass-strong rounded-2xl p-6" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between">
-          <h3 className="font-display text-xl text-foreground">Connect Wallet</h3>
-          <button onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground text-xl leading-none">×</button>
+      <div className="w-full max-w-md glass-strong rounded-2xl p-6 relative" onClick={e => e.stopPropagation()}>
+        <button onClick={() => setOpen(false)} className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"><X className="h-4 w-4" /></button>
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-neon-yellow to-neon-green grid place-items-center text-emerald-darker font-display">M</div>
+          <div>
+            <h3 className="font-display text-xl text-foreground">Connect MetaMask</h3>
+            <p className="text-[11px] text-muted-foreground">Binance Smart Chain · BEP-20</p>
+          </div>
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">Choose your Solana wallet to enter the arena.</p>
-        <div className="mt-5 grid grid-cols-1 gap-2">
-          {wallets.map(w => (
-            <button key={w.name} className={`flex items-center justify-between rounded-xl p-4 bg-gradient-to-r ${w.color} border border-white/10 hover:border-neon-yellow/40 transition group`}>
-              <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-lg bg-emerald-darker grid place-items-center font-display text-neon-yellow">{w.name[0]}</div>
-                <span className="font-display tracking-wide text-foreground">{w.name}</span>
-              </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-neon-yellow" />
+
+        <div className="mt-5 rounded-xl bg-emerald-darker/70 border border-neon-green/15 p-4">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Network className="h-4 w-4 text-neon-green" />
+            We&apos;ll auto-switch your wallet to <span className="text-neon-green font-display ml-1">BNB Smart Chain</span>
+          </div>
+        </div>
+
+        <button
+          onClick={connect}
+          disabled={connecting}
+          className="mt-5 w-full inline-flex items-center justify-between rounded-xl p-4 bg-gradient-to-r from-neon-yellow/30 to-neon-green/20 border border-neon-yellow/40 hover:border-neon-yellow transition group disabled:opacity-60"
+        >
+          <span className="flex items-center gap-3">
+            <span className="h-10 w-10 rounded-lg bg-emerald-darker grid place-items-center font-display text-neon-yellow">M</span>
+            <span className="text-left">
+              <span className="block font-display tracking-wide text-foreground">MetaMask</span>
+              <span className="block text-[11px] text-muted-foreground">{isInstalled ? "Detected · ready to connect" : "Not installed — opens metamask.io"}</span>
+            </span>
+          </span>
+          <ChevronRight className="h-4 w-4 text-neon-yellow group-hover:translate-x-0.5 transition" />
+        </button>
+
+        <div className="mt-3 grid grid-cols-2 gap-2 opacity-70">
+          {[
+            { n: "Trust Wallet", c: "from-sky-500/20 to-sky-300/5" },
+            { n: "WalletConnect", c: "from-fuchsia-500/20 to-fuchsia-300/5" },
+          ].map(w => (
+            <button key={w.n} onClick={() => pushToast({ kind: "info", title: `${w.n} coming soon` })} className={`flex items-center gap-2 rounded-xl p-3 bg-gradient-to-r ${w.c} border border-white/10 text-xs`}>
+              <span className="h-6 w-6 rounded bg-emerald-darker grid place-items-center font-display text-[10px] text-neon-green">{w.n[0]}</span>
+              <span className="text-muted-foreground">{w.n}</span>
             </button>
           ))}
         </div>
+
         <div className="mt-5 text-[11px] text-muted-foreground text-center">
           By connecting you agree to the Terms & Privacy Policy.
         </div>
@@ -813,6 +901,51 @@ function WalletModalRoot() {
     </div>
   );
 }
+
+function BSCNetworkBanner() {
+  const { address, isBSC, ensureBSC } = useMetaMask();
+  if (!address || isBSC) return null;
+  return (
+    <div className="fixed top-[88px] inset-x-0 z-40 px-4">
+      <div className="mx-auto max-w-2xl glass-strong rounded-xl px-4 py-2.5 flex items-center gap-3 border border-amber-400/40 animate-fade-up">
+        <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
+        <div className="text-xs text-foreground flex-1">
+          Wrong network detected. Switch to <span className="text-neon-yellow font-display">BNB Smart Chain</span> to play.
+        </div>
+        <button onClick={ensureBSC} className="rounded-lg bg-neon-yellow text-emerald-darker px-3 py-1.5 text-[11px] font-display tracking-wide">
+          SWITCH
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ToastStack() {
+  const [items, setItems] = useState<Toast[]>([]);
+  useEffect(() => onToast(t => {
+    setItems(prev => [...prev, t]);
+    setTimeout(() => setItems(prev => prev.filter(x => x.id !== t.id)), 4200);
+  }), []);
+  return (
+    <div className="fixed bottom-4 right-4 z-[110] space-y-2 w-[min(360px,calc(100vw-2rem))]">
+      {items.map(t => {
+        const tone = t.kind === "ok" ? "border-neon-green/50" : t.kind === "err" ? "border-red-400/50" : "border-neon-yellow/50";
+        const Icon = t.kind === "ok" ? Check : t.kind === "err" ? AlertTriangle : Info;
+        const color = t.kind === "ok" ? "text-neon-green" : t.kind === "err" ? "text-red-400" : "text-neon-yellow";
+        return (
+          <div key={t.id} className={`glass-strong rounded-xl p-3 flex items-start gap-3 border ${tone} animate-fade-up`}>
+            <Icon className={`h-4 w-4 mt-0.5 ${color}`} />
+            <div className="flex-1 min-w-0">
+              <div className="font-display text-sm text-foreground">{t.title}</div>
+              {t.desc && <div className="text-[11px] text-muted-foreground truncate">{t.desc}</div>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 
 /* ----------------------------- PRIMITIVES -------------------------- */
 
