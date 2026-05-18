@@ -48,33 +48,75 @@ export function useMint() {
     setResult(null);
 
     if (!window.ethereum?.isMetaMask) {
-      pushToast({ kind: "err", title: "MetaMask required", desc: "Connect your wallet first." });
+      pushToast({ kind: "err", title: "MetaMask required", desc: "Install MetaMask to mint." });
+      setError("MetaMask not detected");
       setStatus("error");
       return;
     }
     try {
+      // ---- Preflight: wallet connected ----
       const accounts = (await window.ethereum.request({ method: "eth_accounts" })) as string[];
       const from = accounts?.[0];
       if (!from) {
-        pushToast({ kind: "err", title: "Wallet not connected" });
+        pushToast({ kind: "err", title: "Wallet not connected", desc: "Connect MetaMask before minting." });
+        setError("Wallet not connected");
         setStatus("error");
         return;
       }
+
+      // ---- Preflight: correct network ----
       const cid = (await window.ethereum.request({ method: "eth_chainId" })) as string;
       if (cid !== BSC_CHAIN_ID) {
-        pushToast({ kind: "err", title: "Switch to BNB Smart Chain to mint" });
+        pushToast({ kind: "err", title: "Wrong network", desc: "Switch to BNB Smart Chain." });
+        setError("Wrong network — switch to BSC");
         setStatus("error");
         return;
       }
 
       const data = encodeMintCalldata(from);
-      const valueHex = bnbToHexWei(opts.priceBNB ?? "0");
+      const priceBNB = opts.priceBNB ?? "0";
+      const valueHex = bnbToHexWei(priceBNB);
+
+      // ---- Preflight: sufficient balance (price + estimated gas) ----
+      const balHex = (await window.ethereum.request({
+        method: "eth_getBalance",
+        params: [from, "latest"],
+      })) as string;
+      const balance = BigInt(balHex);
+      const priceWei = BigInt(valueHex);
+
       const tx = {
         from,
         to: NFT_CONTRACT_ADDRESS,
         value: valueHex,
         data,
       };
+
+      let gasCost = 0n;
+      try {
+        const gasHex = (await window.ethereum.request({
+          method: "eth_estimateGas",
+          params: [tx],
+        })) as string;
+        const gasPriceHex = (await window.ethereum.request({
+          method: "eth_gasPrice",
+        })) as string;
+        gasCost = BigInt(gasHex) * BigInt(gasPriceHex);
+      } catch {
+        // Fallback: assume ~250k gas at 5 gwei on BSC
+        gasCost = 250_000n * 5_000_000_000n;
+      }
+
+      const required = priceWei + gasCost;
+      if (balance < required) {
+        const needed = Number(required) / 1e18;
+        const have = Number(balance) / 1e18;
+        const msg = `Need ~${needed.toFixed(4)} BNB (have ${have.toFixed(4)})`;
+        pushToast({ kind: "err", title: "Insufficient balance", desc: msg });
+        setError(`Insufficient balance — ${msg}`);
+        setStatus("error");
+        return;
+      }
 
       // Pre-flight: simulate the call so we fail fast with a readable revert
       // reason BEFORE prompting the user to sign.
