@@ -40,12 +40,12 @@ type WalletState = {
   balance: string;
   connecting: boolean;
 };
-const state: WalletState = { address: null, chainId: null, balance: "0", connecting: false };
+let state: WalletState = { address: null, chainId: null, balance: "0", connecting: false };
 const listeners = new Set<() => void>();
 const subscribe = (cb: () => void) => { listeners.add(cb); return () => { listeners.delete(cb); }; };
 const getSnapshot = () => state;
 function set(patch: Partial<WalletState>) {
-  Object.assign(state, patch);
+  state = { ...state, ...patch };
   listeners.forEach(l => l());
 }
 
