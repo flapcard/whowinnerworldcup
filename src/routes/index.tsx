@@ -111,7 +111,7 @@ function Header() {
               onClick={() => { setOpen(false); window.dispatchEvent(new CustomEvent("open-wallet")); }}
               className="w-full mt-2 rounded-xl bg-neon-yellow text-emerald-darker px-4 py-2 text-sm font-display"
             >
-              CONNECT WALLET
+              CONNECT METAMASK
             </button>
           </div>
         )}
@@ -197,7 +197,7 @@ function Hero() {
               onClick={() => window.dispatchEvent(new CustomEvent("open-wallet"))}
               className="inline-flex items-center gap-2 rounded-xl glass px-5 py-3 font-display tracking-wide text-foreground hover:border-neon-yellow/40 transition"
             >
-              <Wallet className="h-5 w-5" /> CONNECT WALLET
+              <Wallet className="h-5 w-5" /> CONNECT METAMASK
             </button>
           </div>
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -244,7 +244,7 @@ function LiveTicker() {
     "🔥 Legendary MBAPPÉ minted by 0x12c..89e",
     "🏆 Tournament 'Group D' starts in 02:14:33",
     "⚔ MESSI vs RONALDO — bet 12,000 $CUP",
-    "💎 Mythic HAALAND dropped in marketplace",
+    "💎 Mythic HAALAND dropped — view on BscScan",
     "🌍 Season 01 prize pool exceeded 12M $CUP",
   ];
   const row = [...items, ...items];
@@ -266,7 +266,8 @@ function LiveTicker() {
 /* ---------------------------- GAMEPLAY ----------------------------- */
 
 const steps = [
-  { icon: Wallet,       title: "Connect Solana Wallet", desc: "Sign in instantly with Phantom, Solflare or Backpack." },
+  { icon: Wallet,       title: "Connect MetaMask",      desc: "Sign in with MetaMask on desktop or mobile." },
+  { icon: Network,      title: "Switch to BSC",         desc: "Auto-detect & switch to BNB Smart Chain (BEP-20)." },
   { icon: Sparkles,     title: "Mint Football NFTs",    desc: "Mint legendary player cards directly on-chain." },
   { icon: ShieldCheck,  title: "Build Your Team",       desc: "Combine attack, defense, speed & skill to dominate." },
   { icon: Coins,        title: "Bet 1,000 $CUP+",       desc: "Stake $CUP to enter ranked arena battles." },
@@ -280,7 +281,7 @@ function Gameplay() {
       <SectionHead
         eyebrow="HOW IT WORKS"
         title={<>FROM <span className="text-gradient-cup">MINT</span> TO <span className="text-gradient-cup">VICTORY</span></>}
-        sub="Six steps to enter the arena. No tutorials. No mercy."
+        sub="Seven steps to enter the arena. No tutorials. No mercy."
       />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {steps.map((s, i) => (
@@ -308,7 +309,7 @@ function CardShowcase() {
       <SectionHead
         eyebrow="LEGENDARY ROSTER"
         title={<>OWN THE <span className="text-gradient-cup">GREATEST</span> CARDS</>}
-        sub="Each NFT holds Attack, Defense, Speed, Skill, Rarity & Power Score — minted on Solana, tradable forever."
+        sub="Each NFT holds Attack, Defense, Speed, Skill, Rarity & Power Score — minted on BNB Smart Chain, tradable forever."
       />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
         {players.map(p => (
@@ -369,7 +370,7 @@ const tokenData = [
 
 function Tokenomics() {
   const [copied, setCopied] = useState(false);
-  const contract = "CUPxx1111pump...So1ana222Fun333Token444";
+  const contract = "0xCUP00000000000000000000000000000000CafE42";
   return (
     <section id="token" className="relative py-24 sm:py-32">
       <SectionHead
@@ -383,10 +384,10 @@ function Tokenomics() {
             {[
               ["Token Name", "CUP Token"],
               ["Ticker", "$CUP"],
-              ["Blockchain", "Solana"],
-              ["Launch", "pump.fun"],
+              ["Blockchain", "BNB Smart Chain"],
+              ["Launch", "PancakeSwap"],
               ["Total Supply", "1,000,000,000"],
-              ["Tax", "0 / 0"],
+              ["Standard", "BEP-20"],
             ].map(([k, v]) => (
               <div key={k} className="rounded-xl bg-emerald-darker/60 p-4 border border-neon-green/10">
                 <div className="text-[10px] tracking-[0.25em] text-muted-foreground uppercase">{k}</div>
@@ -539,7 +540,7 @@ const leaders = [
   { rank: 1, name: "0xKAIZER",   wr: "92%", prize: "184,210 $CUP", nfts: 47 },
   { rank: 2, name: "GOAL_GOD",   wr: "88%", prize: "152,800 $CUP", nfts: 38 },
   { rank: 3, name: "ULTRAS",     wr: "85%", prize: "129,600 $CUP", nfts: 41 },
-  { rank: 4, name: "PHANTOM_9",  wr: "83%", prize: "118,400 $CUP", nfts: 29 },
+  { rank: 4, name: "BSC_NINJA",  wr: "83%", prize: "118,400 $CUP", nfts: 29 },
   { rank: 5, name: "TIKI_TAKA",  wr: "81%", prize: "104,900 $CUP", nfts: 35 },
   { rank: 6, name: "SOL_STRIKER",wr: "79%", prize: "94,300 $CUP",  nfts: 26 },
 ];
@@ -579,7 +580,7 @@ function Leaderboard() {
 /* ----------------------------- ROADMAP ----------------------------- */
 
 const roadmap = [
-  { phase: "Phase 1", title: "Foundation",     items: ["Website Launch", "Community Building", "Token Launch on pump.fun"], status: "live" },
+  { phase: "Phase 1", title: "Foundation",     items: ["Website Launch", "Community Building", "$CUP Token Launch on BSC"], status: "live" },
   { phase: "Phase 2", title: "Genesis Mint",   items: ["NFT Mint Launch", "PvP Battle Beta", "Marketplace Release"], status: "next" },
   { phase: "Phase 3", title: "Competitive",    items: ["Ranked Tournament System", "Mobile Version", "Staking Platform"], status: "soon" },
   { phase: "Phase 4", title: "Global Stage",   items: ["Global Championships", "Major Partnerships", "Esports Expansion"], status: "soon" },
@@ -624,11 +625,12 @@ function Roadmap() {
 /* -------------------------------- FAQ ------------------------------ */
 
 const faqs = [
-  { q: "What is Who Winner World Cup?",   a: "A Web3 football NFT battle game built on Solana — collect player cards, build a team, and bet $CUP in PvP matches." },
+  { q: "What is Who Winner World Cup?",   a: "A Web3 football NFT battle game built on Binance Smart Chain — collect player cards, build a team, and bet $CUP in PvP matches." },
   { q: "How do I earn rewards?",          a: "Win PvP matches and tournaments using your NFT football cards. Winners take the entire prize pool, paid on-chain." },
   { q: "What is the minimum battle bet?", a: "Minimum 1,000 $CUP per match. Higher stakes unlock ranked arenas and premium tournaments." },
-  { q: "Can I trade my NFTs?",            a: "Yes. Every card is a true Solana NFT — buy, sell, upgrade and trade freely in the in-game marketplace." },
-  { q: "Is wallet connection required?",  a: "Yes. You need a Solana wallet (Phantom, Solflare, Backpack) to play, mint and claim rewards." },
+  { q: "Can I trade my NFTs?",            a: "Yes. Every card is a true BEP-20 NFT — buy, sell, upgrade and trade freely in the in-game marketplace." },
+  { q: "Is wallet connection required?",  a: "Yes. You need MetaMask connected to BNB Smart Chain to play, mint and claim rewards." },
+  { q: "Which blockchain is used?",       a: "Binance Smart Chain (BEP-20). The app auto-detects your network and offers to switch to BSC." },
 ];
 
 function FAQ() {
@@ -708,14 +710,14 @@ function CTA() {
               READY TO <span className="text-gradient-cup">CLAIM THE CUP?</span>
             </h2>
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-              Mint your first legendary card, connect your Solana wallet, and step into the arena.
+              Mint your first legendary card, connect MetaMask on BNB Smart Chain, and step into the arena.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent("open-wallet"))}
                 className="inline-flex items-center gap-2 rounded-xl bg-neon-yellow text-emerald-darker px-6 py-3 font-display tracking-wide glow-yellow hover:brightness-110 transition"
               >
-                <Wallet className="h-5 w-5" /> CONNECT & PLAY
+                <Wallet className="h-5 w-5" /> CONNECT METAMASK
               </button>
               <a href="#cards" className="inline-flex items-center gap-2 rounded-xl bg-neon-green/15 border border-neon-green/40 text-neon-green px-6 py-3 font-display hover:bg-neon-green/25 transition">
                 <Sparkles className="h-5 w-5" /> MINT NFT
@@ -738,7 +740,7 @@ function Footer() {
           <div>
             <Logo />
             <p className="mt-4 text-sm text-muted-foreground max-w-sm">
-              The first AAA Web3 football card battler on Solana. Collect. Battle. Win.
+              The first AAA Web3 football card battler on Binance Smart Chain. Collect. Battle. Win.
             </p>
             <div className="mt-5 flex gap-3">
               {[Twitter, Send, MessageCircle].map((Icon, i) => (
@@ -750,7 +752,7 @@ function Footer() {
           </div>
           {[
             { title: "GAME", links: ["Gameplay", "Marketplace", "Leaderboard", "Tournaments"] },
-            { title: "TOKEN", links: ["Tokenomics", "Buy on pump.fun", "Staking", "Whitepaper"] },
+            { title: "TOKEN", links: ["Tokenomics", "Buy on PancakeSwap", "Staking", "Whitepaper"] },
             { title: "LEGAL", links: ["Terms", "Privacy", "Docs", "Contact"] },
           ].map(col => (
             <div key={col.title}>
@@ -766,7 +768,7 @@ function Footer() {
         <div className="mt-10 pt-6 border-t border-neon-green/10 flex flex-col sm:flex-row gap-4 items-center justify-between text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} Who Winner World Cup. All rights reserved.</div>
           <div className="flex items-center gap-2">
-            <span className="text-neon-green">●</span> Solana mainnet · Powered by pump.fun
+            <span className="text-neon-green">●</span> BNB Smart Chain · Powered by PancakeSwap
           </div>
         </div>
       </div>
