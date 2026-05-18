@@ -13,6 +13,7 @@ import { Logo } from "@/components/site/Logo";
 import { Stadium } from "@/components/site/Stadium";
 import { PlayerCard, type PlayerCardData } from "@/components/site/PlayerCard";
 import { MintModalRoot } from "@/components/site/MintModal";
+import { WalletStatusBanner } from "@/components/site/WalletStatusBanner";
 import { useMetaMask, onToast, pushToast, type Toast } from "@/hooks/useMetaMask";
 import card1 from "@/assets/card-1.jpg";
 import card2 from "@/assets/card-2.jpg";
