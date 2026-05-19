@@ -976,7 +976,7 @@ function Footer() {
               {[Twitter, Send, MessageCircle].map((Icon, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href="https://x.com/cup_token"
                   className="h-10 w-10 grid place-items-center rounded-xl glass text-neon-green hover:text-neon-yellow hover:border-neon-yellow/40 transition"
                 >
                   <Icon className="h-4 w-4" />
