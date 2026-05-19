@@ -511,7 +511,7 @@ function Tokenomics() {
               ["Token Name", "CUP Token"],
               ["Ticker", "$CUP"],
               ["Blockchain", "BNB Smart Chain"],
-              ["Launch", "flap.sh"],
+              ["Launch", "four.meme"],
               ["Total Supply", "1,000,000,000"],
               ["Standard", "BEP-20"],
             ].map(([k, v]) => (
@@ -986,7 +986,7 @@ function Footer() {
           </div>
           {[
             { title: "GAME", links: ["Gameplay", "Marketplace", "Leaderboard", "Tournaments"] },
-            { title: "TOKEN", links: ["Tokenomics", "Buy on flap.sh", "Staking", "Whitepaper"] },
+            { title: "TOKEN", links: ["Tokenomics", "Buy on four.meme", "Staking", "Whitepaper"] },
             { title: "LEGAL", links: ["Terms", "Privacy", "Docs", "Contact"] },
           ].map((col) => (
             <div key={col.title}>
