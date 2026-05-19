@@ -1006,7 +1006,7 @@ function Footer() {
         <div className="mt-10 pt-6 border-t border-neon-green/10 flex flex-col sm:flex-row gap-4 items-center justify-between text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} Who Winner World Cup. All rights reserved.</div>
           <div className="flex items-center gap-2">
-            <span className="text-neon-green">●</span> BNB Smart Chain · Powered by flap.sh
+            <span className="text-neon-green">●</span> BNB Smart Chain · Powered by CUPTokenDev
           </div>
         </div>
       </div>
