@@ -986,7 +986,7 @@ function Footer() {
           </div>
           {[
             { title: "GAME", links: ["Gameplay", "Marketplace", "Leaderboard", "Tournaments"] },
-            { title: "TOKEN", links: ["Tokenomics", "Buy on four.meme", "Staking", "Whitepaper"] },
+            { title: "TOKEN", links: ["Tokenomics", "Buy on flap.sh", "Staking", "Whitepaper"] },
             { title: "LEGAL", links: ["Terms", "Privacy", "Docs", "Contact"] },
           ].map((col) => (
             <div key={col.title}>
