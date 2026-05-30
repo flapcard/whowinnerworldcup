@@ -511,7 +511,7 @@ function Tokenomics() {
               ["Token Name", "CUP Token"],
               ["Ticker", "$CUP"],
               ["Blockchain", "BNB Smart Chain"],
-              ["Launch", "four.meme"],
+              ["Launch", "flap.sh"],
               ["Total Supply", "1,000,000,000"],
               ["Standard", "BEP-20"],
             ].map(([k, v]) => (
