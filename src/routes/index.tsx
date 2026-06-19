@@ -492,7 +492,7 @@ const tokenData = [
 
 function Tokenomics() {
   const [copied, setCopied] = useState(false);
-  const contract = "4444";
+  const contract = "0xeb8cbe209b4fb7380c04448ec3d4c9543b299cbc";
   return (
     <section id="token" className="relative py-24 sm:py-32">
       <SectionHead
